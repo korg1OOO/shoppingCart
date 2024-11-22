@@ -46,5 +46,59 @@
       <a href="carrinho.html" class="botao">Adicionar ao Carrinho</a>
     </div>
   </main>
+
+  <script>
+
+    const produtoItemNome = document.querySelectorAll(".produto-item h2");
+    const produtoItemPreco = document.querySelectorAll(".produto-item .preco");
+    const produtoItemBtn = document.querySelectorAll(".produto-item a");
+    
+    for (let index = 0; index < 4; index++){
+
+      produtoItemBtn[index].addEventListener("click", (evento)=>{
+
+      evento.preventDefault();
+      
+      let carrinho = obterTodosProdutos();
+
+      let produtoJaExiste = false;
+      
+      for (let j = 0; j < carrinho.length; j++){
+
+        if (carrinho[j].nome == produtoItemNome[index].textContent){
+
+          carrinho[j].quantidade++;
+          produtoJaExiste = true;
+        }
+
+      }
+
+      if(produtoJaExiste == false){
+        
+      let produto = {
+        "nome": produtoItemNome[index].textContent,
+        "preço": produtoItemPreco[index].textContent,
+        "quantidade": 1
+      }
+
+      carrinho.push(produto);
+      }
+
+      });
+      
+    }
+
+    function obterTodosProdutos(){
+      let carrinho = JSON.parse(localStorage.getItem("carrinho"));
+
+      if(carrinho === null || carrinho.length < 1){
+        carrinho = [];
+      }
+
+      return carrinho;
+
+    }
+
+  </script>
 </body>
 </html>
